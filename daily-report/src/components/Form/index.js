@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "./index.css";
 
 export default function Form({ logo }) {
   const [tomorrowTask, setTomorrowTask] = useState("");
@@ -9,12 +10,23 @@ export default function Form({ logo }) {
       : []
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost/api/articles");
+      const data = await response.json();
+      console.log(data);
+    };
+
+    fetchData();
+  }, []);
+
   const handleTomorrowTaskChange = (event) => {
     setTomorrowTask(event.target.value);
   };
 
   const handleTomorrowTaskForm = (event) => {
     event.preventDefault();
+
     setTomorrowTasks((prev) => [...prev, tomorrowTask]);
     setTomorrowTask("");
   };
